@@ -11,11 +11,14 @@ public class Character : MonoBehaviour {
     private float speed = 5f;
     private float jumpForce = 250f;
     private bool facingRight = true;
-
+    private Animator anim;
+    private AudioSource audio;
 	// Use this for initialization
 	void Start () {
         rb2d = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
+        audio = GetComponent<AudioSource>();
         cam.transform.position = new Vector3(rb2d.transform.position.x, cam.transform.position.y, cam.transform.position.z);
     }
 	
@@ -32,7 +35,8 @@ public class Character : MonoBehaviour {
 
         if (Input.GetButtonDown("Jump")) {
             rb2d.AddForce(Vector2.up*jumpForce);
+            audio.Play();
         }
-
-	}
+        anim.SetFloat("Speed", Mathf.Abs(move));
+    }
 }
